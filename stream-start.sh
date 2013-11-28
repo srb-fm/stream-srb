@@ -32,6 +32,15 @@ function f_check_configfile () {
 	fi
 }
 
+function f_check_log_dir () {
+	if [ ! -d "$logdir" ]
+	then
+		message="$message Creating log-directory..\n$logdir\n"
+		mkdir "$logdir"
+		echo $message
+		sleep 1
+	fi
+}
 
 function f_check_package () {
         package_install=$1
@@ -50,7 +59,7 @@ function f_check_tools_to_use () {
 }
 
 function f_start_meterbridge () {
-	message="# Starting Meterbridge..\n"
+	message="#$message Starting Meterbridge..\n"
 	echo $message
 	f_check_package "meterbridge"
 	sleep 1
@@ -152,6 +161,7 @@ echo "Starting Stream and Jack-Apps..."
 (	echo "10"
 	message="# Starting Tools..\n"
 	f_check_configfile
+	f_check_log_dir
 	#f_check_tools_to_use
 	f_check_jack
 	f_check_jamin
