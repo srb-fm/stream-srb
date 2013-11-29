@@ -35,13 +35,14 @@ rotter_set="-a -f mp3 -b 192 -v -L flat -N SRB_Prot"
 
 # terminal you will use for watchdog
 terminal_type="gnome-terminal"
-terminal_type="xfce4-terminal"
+#terminal_type="xfce4-terminal"
 
 # settings for stream-init.sh
 program=/usr/bin/darkice
 configfile=/home/$USER/stream-srb/stream-set/stream-darkice.cfg
 logdir=/home/$USER/stream-srb/stream-log
 logfile=/home/$USER/stream-srb/stream-log/stream.log
+logfile_archive="/home/$USER/srb-stream/stream-log/stream-$(date +'%y-%m-%d-%H-%M-%S').log"
 progname="darkice"
 restart_delay=2
 verbose="5"
