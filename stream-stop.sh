@@ -10,7 +10,7 @@
 #
 
 # config:
-stream_config="stream-set/stream-config.sh"
+stream_config="/home/$USER/stream-srb/stream-set/stream-config.sh"
 
 ## do not edit below this line
 source $stream_config
