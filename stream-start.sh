@@ -164,7 +164,7 @@ echo "Starting Stream and Jack-Apps..."
 	fi
 
 	if [ "$meterbridge" != "n" ]; then
-		f_check_meterbridge
+		f_start_meterbridge
 	fi
 
 	if [ "$ebumeter" != "n" ]; then
