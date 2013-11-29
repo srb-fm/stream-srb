@@ -60,6 +60,9 @@ function f_start_meterbridge () {
 	f_check_package "meterbridge"
 	sleep 1
 	meterbridge -t dpm -n stream-bridge x x &
+	message="#$message Connecting Meterbridge..\n"
+	echo $message
+	sleep 2
 	jack_connect $jack_source_1 stream-bridge:meter_1 &
 	jack_connect $jack_source_2 stream-bridge:meter_2 &
 }
@@ -105,7 +108,7 @@ function f_start_jamin () {
 function f_connect_jamin () {
 	message="$message Connect Jamin..\n"
 	echo $message
-	sleep 2
+	sleep 3
 	jack_connect $jack_source_1 jamin:in_L &
 	jack_connect $jack_source_2 jamin:in_R &
 }
@@ -115,7 +118,7 @@ function f_start_audiorecorder () {
 	echo $message
 	f_check_package "rotter"
 	sleep 1	
-	rotter -a -f mp3 -b 192 -v -L flat -N SRB_Prot "$path_stream_rec" &
+	rotter $rotter_set "$path_stream_rec" &
 }
 
 function f_start_stream_init () {

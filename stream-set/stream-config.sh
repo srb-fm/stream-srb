@@ -30,6 +30,13 @@ meterbridge="n"
 recorder="n"
 ebumeter="n"
 
+# settings for audiorecorder rotter (refer to the manpage of rotter)
+rotter_set="-a -f mp3 -b 192 -v -L flat -N SRB_Prot"
+
+# terminal you will use for watchdog
+terminal_type="gnome-terminal"
+terminal_type="xfce4-terminal"
+
 # settings for stream-init.sh
 program=/usr/bin/darkice
 configfile=/home/$USER/stream-srb/stream-set/stream-darkice.cfg
