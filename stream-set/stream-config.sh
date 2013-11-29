@@ -15,7 +15,7 @@
 path_stream_tools="/home/$USER/stream-srb/stream-set"
 
 # path for recording audios
-path_stream_rec="/home/$USER/stream-srb/stream-record"
+rec_dir="/home/$USER/stream-srb/stream-record"
 
 # path and filename for process-id of darkice
 pidfile_int="/home/$USER/stream-srb/stream-set/darkice.pid"

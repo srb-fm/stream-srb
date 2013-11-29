@@ -42,6 +42,16 @@ function f_check_log_dir () {
 	fi
 }
 
+function f_check_rec_dir () {
+	if [ ! -d "$rec_dir" ]
+	then
+		message="$message Creating log-directory..\n$rec_dir\n"
+		mkdir "$rec_dir"
+		echo $message
+		sleep 1
+	fi
+}
+
 function f_check_package () {
         package_install=$1
         if dpkg-query -s $1 2>/dev/null|grep -q installed; then
@@ -117,8 +127,9 @@ function f_start_audiorecorder () {
 	message="$message Begin recording..\n"
 	echo $message
 	f_check_package "rotter"
+	f_check_rec_dir
 	sleep 1	
-	rotter $rotter_set "$path_stream_rec" &
+	rotter $rotter_set "$rec_dir" &
 }
 
 function f_start_stream_init () {
