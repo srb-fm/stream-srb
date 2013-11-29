@@ -15,7 +15,7 @@
 #
 #
 # config
-configfile="stream-config.sh"
+configfile="/home/$USER/stream-srb/stream-set/stream-config.sh"
 
 ## do not edit below this line
 source $configfile

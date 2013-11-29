@@ -2,7 +2,7 @@
 
 ## settings ##
 # check your paths!
-configfile="stream-config.sh"
+configfile="/home/$USER/stream-srb/stream-set/stream-config.sh"
 
 source $configfile
 
