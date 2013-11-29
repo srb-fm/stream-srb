@@ -59,7 +59,9 @@ function f_start_meterbridge () {
 	echo $message
 	f_check_package "meterbridge"
 	sleep 1
-	meterbridge -t dpm alsa_pcm:$audio_source_meter_1 alsa_pcm:$audio_source_meter_2 &
+	meterbridge -t dpm -n stream-bridge x x &
+	jack_connect $jack_source_1 stream-bridge:meter_1 &
+	jack_connect $jack_source_2 stream-bridge:meter_2 &
 }
 
 function f_start_ebumeter () {
