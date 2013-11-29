@@ -14,7 +14,7 @@
 # path to stream-toolset
 path_stream_tools="/home/$USER/stream-srb/stream-set"
 
-# in this path audios to be recorded
+# path for recording audios
 path_stream_rec="/home/$USER/stream-srb/stream-record"
 
 # path and filename for process-id of darkice
@@ -23,6 +23,12 @@ pidfile_int="/home/$USER/stream-srb/stream-set/darkice.pid"
 # jack-source for streaming
 jack_source_1="system:capture_1"
 jack_source_2="system:capture_2"
+
+# tools you will use (j/n)
+jamin="j"
+meterbridge="n"
+recorder="n"
+ebumeter="n"
 
 # settings for stream-init.sh
 program=/usr/bin/darkice

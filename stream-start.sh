@@ -53,10 +53,6 @@ function f_check_package () {
         fi
 }
 
-function f_check_tools_to_use () {
-	ans=$(zenity  --list  --text "Which Tools you want to use?" --checklist  --column "Pick" --column "options" TRUE "Jamin" TRUE "Audiorecorder" FALSE "EBU Meter" FALSE "Meterbridge" --separator=":"); echo $ans
-
-}
 
 function f_start_meterbridge () {
 	message="#$message Starting Meterbridge..\n"
@@ -162,16 +158,33 @@ echo "Starting Stream and Jack-Apps..."
 	message="# Starting Tools..\n"
 	f_check_configfile
 	f_check_log_dir
-	#f_check_tools_to_use
 	f_check_jack
-	f_check_jamin
-	#f_start_meterbridge
-	#f_start_ebumeter
-	f_start_jamin
-	f_connect_jamin
-	#f_start_audiorecorder
+	if [ "$jamin" != "n" ]; then
+		f_check_jamin
+	fi
+
+	if [ "$meterbridge" != "n" ]; then
+		f_check_meterbridge
+	fi
+
+	if [ "$ebumeter" != "n" ]; then
+		f_check_ebumeter
+	fi
+
+	if [ "$jamin" != "n" ]; then
+		f_start_jamin
+		f_connect_jamin
+	fi
+
+	if [ "$recorder" != "n" ]; then
+		f_start_audiorecorder
+	fi	
 	f_start_stream_init
-	f_connect_darkice
+
+	if [ "$jamin" != "n" ]; then
+		f_connect_darkice
+	fi
+
 	f_start_watchdog
 	sleep 5
 	echo "100"
