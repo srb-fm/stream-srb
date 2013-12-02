@@ -83,6 +83,9 @@ function f_start_ebumeter () {
 	f_check_package "ebumeter"
 	sleep 1
 	ebumeter &
+	sleep 2
+	jack_connect $jack_source_1 ebumeter:in_R &
+	jack_connect $jack_source_2 ebumeter:in_L &
 }
 
 function f_check_jack () {
@@ -143,7 +146,7 @@ function f_start_stream_init () {
 	echo $message
 }
 
-function f_connect_darkice () {
+function f_connect_darkice_jammin () {
 	message="$message Connect Darkice..\n"
 	echo $message
 	sleep 1
@@ -158,6 +161,15 @@ function f_connect_darkice () {
 	jack_connect jamin:out_R $pdarkice:right &
 }
 
+function f_connect_ebumeter_jammin () {
+	message="$message Connect EBU-Meter..\n"
+	echo $message
+	sleep 1
+	jack_disconnect $jack_source_1  ebumeter:in_R &
+	jack_disconnect $jack_source_2 ebumeter:in_L &
+	jack_connect $jack_source_1 ebumeter:in_R &
+	jack_connect $jack_source_2 ebumeter:in_L &
+}
 
 function f_start_watchdog () {
 	message="$message Starting Watchdog..\n"
@@ -198,7 +210,11 @@ echo "Starting Stream and Jack-Apps..."
 	f_start_stream_init
 
 	if [ "$jamin" != "n" ]; then
-		f_connect_darkice
+		f_connect_darkice_jammin
+	fi
+
+	if [ "$jamin" != "n" ]; then
+		f_connect_ebumeter_jammin
 	fi
 
 	f_start_watchdog
