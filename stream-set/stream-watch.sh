@@ -38,13 +38,13 @@ while (true) ; do
 
 	if grep "$error_msg_3" "$logfile" 
 	then 
-		echo -e "$(date +'%y-%m-%d-%H-%M-%S') Keine Verbindung zu Server \nstopp darkice"
+		echo -e "$(date +'%y-%m-%d-%H-%M-%S') No connect to Server \nstopp darkice"
 		./stream-init.sh stop
 	fi
 
 	if [ $darkice_error -gt 0 ]
 	then
-		echo -e "$(date +'%y-%m-%d-%H-%M-%S') Fehler gefunden \nstopp darkice"
+		echo -e "$(date +'%y-%m-%d-%H-%M-%S') Found Error \nstopp darkice"
 		./stream-init.sh stop
 		echo "start stream..."
 		sleep 6
