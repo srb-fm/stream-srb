@@ -164,7 +164,7 @@ function f_start_watchdog () {
 	echo $message
 	sleep 1
 	cd "$path_stream_tools"
-	gnome-terminal -x ./stream-watch.sh start &
+	$terminal_type -x ./stream-watch.sh start &
 }
 
 
