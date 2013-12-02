@@ -184,7 +184,7 @@ echo "Starting Stream and Jack-Apps..."
 	fi
 
 	if [ "$ebumeter" != "n" ]; then
-		f_check_ebumeter
+		f_start_ebumeter
 	fi
 
 	if [ "$jamin" != "n" ]; then
