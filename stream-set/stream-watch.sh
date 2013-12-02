@@ -10,6 +10,7 @@ source $configfile
 error_msg="failed to write to ring"
 error_msg_1="encoding ends"
 error_msg_2="lame lib opening underlying sink error"
+error_msg_3="gethostbyname error"
 darkice_error=0
 watch_counter=0
 error_counter=0
@@ -34,6 +35,13 @@ while (true) ; do
 		((darkice_error+=1))
 		((error_counter+=1))
 	fi
+
+	if grep "$error_msg_3" "$logfile" 
+	then 
+		echo -e "$(date +'%y-%m-%d-%H-%M-%S') Keine Verbindung zu Server \nstopp darkice"
+		./stream-init.sh stop
+	fi
+
 	if [ $darkice_error -gt 0 ]
 	then
 		echo -e "$(date +'%y-%m-%d-%H-%M-%S') Fehler gefunden \nstopp darkice"
