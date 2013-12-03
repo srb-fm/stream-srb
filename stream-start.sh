@@ -216,7 +216,7 @@ echo "Starting Stream and Jack-Apps..."
 	fi
 
 	if [ "$jamin" != "n" ]; then
-		f_connect_ebumeter_jammin
+		f_connect_ebumeter_jamin
 	fi
 
 	f_start_watchdog
