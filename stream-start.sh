@@ -167,10 +167,10 @@ function f_connect_ebumeter_jamin () {
 	message="$message Connect EBU-Meter..\n"
 	echo $message
 	sleep 1
-	jack_disconnect $jack_source_1  ebumeter:in.L &
+	jack_disconnect $jack_source_1 ebumeter:in.L &
 	jack_disconnect $jack_source_2 ebumeter:in.R &
-	jack_connect $jack_source_1 ebumeter:in.L &
-	jack_connect $jack_source_2 ebumeter:in.R &
+	jack_connect jamin:out_L ebumeter:in.L &
+	jack_connect jamin:out_R ebumeter:in.R &
 }
 
 function f_start_watchdog () {
