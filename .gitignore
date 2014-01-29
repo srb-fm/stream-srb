@@ -9,6 +9,7 @@
 *.log
 _.htaccess
 *.template~
+*.cfg~
 *.nja
 __init__.py
 
