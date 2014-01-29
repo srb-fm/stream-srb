@@ -163,6 +163,16 @@ function f_connect_darkice_jamin () {
 	jack_connect jamin:out_R $pdarkice:right &
 }
 
+function f_connect_rotter_jamin () {
+	message="$message Connect Rotter..\n"
+	echo $message
+	sleep 1
+	echo $message
+	jack_disconnect $jack_source_1 rotter:left &
+	jack_disconnect $jack_source_2 rotter:right &
+	jack_connect jamin:out_L rotter:left &
+	jack_connect jamin:out_R rotter:right &
+}
 function f_connect_ebumeter_jamin () {
 	message="$message Connect EBU-Meter..\n"
 	echo $message
@@ -213,6 +223,9 @@ echo "Starting Stream and Jack-Apps..."
 
 	if [ "$jamin" != "n" ]; then
 		f_connect_darkice_jamin
+		if [ "$recorder" != "n" ]; then
+			f_connect_rotter_jamin
+		fi
 	fi
 
 	if [ "$jamin" != "n" ]; then
