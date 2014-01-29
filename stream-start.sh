@@ -155,7 +155,7 @@ function f_connect_darkice_jamin () {
 	# pid ermitteln
 	pid_darkice=$(cat $pidfile_int)
 	pdarkice="darkice-$pid_darkice"
-	message="$message $pdarkice"
+	message="$message $pdarkice\n"
 	echo $message
 	jack_disconnect $jack_source_1 $pdarkice:left &
 	jack_disconnect $jack_source_2 $pdarkice:right &
@@ -229,7 +229,9 @@ echo "Starting Stream and Jack-Apps..."
 	fi
 
 	if [ "$jamin" != "n" ]; then
-		f_connect_ebumeter_jamin
+		if [ "$ebumeter" != "n" ]; then
+			f_connect_ebumeter_jamin
+		fi
 	fi
 
 	f_start_watchdog
