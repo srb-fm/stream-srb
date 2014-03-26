@@ -1,5 +1,16 @@
 #!/bin/bash
-
+#
+# This script is for watching darkice-errors
+# It uses stream-init.sh to start and stop darkice
+#
+# Thankx to Niels Dettenbach
+#
+# Author: Joerg Sorge
+# Distributed under the terms of GNU GPL version 2 or later
+# Copyright (C) Joerg Sorge joergsorge at gmail.com
+# 2013-03-20
+#
+#
 ## settings ##
 # check your paths!
 configfile="/home/$USER/stream-srb/stream-set/stream-config.sh"
@@ -7,7 +18,7 @@ configfile="/home/$USER/stream-srb/stream-set/stream-config.sh"
 source $configfile
 
 #logfile=comes from $configfile
-error_msg="failed to write to ring"
+error_msg_0="failed to write to ring"
 error_msg_1="encoding ends"
 error_msg_2="lame lib opening underlying sink error"
 error_msg_3="gethostbyname error"
@@ -19,7 +30,7 @@ error_counter=0
 echo -e "Watchig for darkice-errors in \n$logfile \nType Ctrl+C to cancel " 
 while (true) ; do
 (	
-	if grep "$error_msg" "$logfile" 
+	if grep "$error_msg_0" "$logfile" 
 	then 
 		((darkice_error+=1))
 		((error_counter+=1))
