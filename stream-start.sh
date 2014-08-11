@@ -117,7 +117,7 @@ function f_start_jamin () {
 	echo $message
 	f_check_package "jamin"
 	sleep 1
-	jamin &
+	jamin -f /home/$USER/stream-srb/stream-set/stream-srb.jam &
 }
 
 function f_connect_jamin () {
