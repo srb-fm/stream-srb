@@ -29,21 +29,35 @@ echo "Stream Jack-Apps-stopping..."
 	message=$(./stream-init.sh stop)
 	echo "# $message"
 
-	echo "# Audio-Recorder stop.."
-	sleep 1	
-	killall rotter &
+	if [ "$recorder" != "n" ]; then
+		echo "# Audio-Recorder stop.."
+		sleep 1	
+		killall rotter &
+	fi
 	
-	echo "# Jamin stop.."
-	sleep 1	
-	killall jamin &
+	if [ "$jamin" != "n" ]; then
+		echo "# Jamin stop.."
+		sleep 1	
+		killall jamin &
+	fi
 
-	echo "# Meterbridge stop.."
-	sleep 1
-	killall meterbridge &
+	if [ "$calffx" != "n" ]; then
+		echo "# Calfjackhost stop.."
+		sleep 1	
+		killall calfjackhost &
+	fi
+
+	if [ "$meterbridge" != "n" ]; then
+		echo "# Meterbridge stop.."
+		sleep 1
+		killall meterbridge &
+	fi	
 	
-	echo "# EBU Meter stop.."
-	sleep 1
-	killall ebumeter &
+	if [ "$ebumeter" != "n" ]; then
+		echo "# EBU Meter stop.."
+		sleep 1
+		killall ebumeter &
+	fi
 
 	sleep 2
 	echo "100"

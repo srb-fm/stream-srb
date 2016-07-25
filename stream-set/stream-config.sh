@@ -24,11 +24,16 @@ pidfile_int="/home/$USER/stream-srb/stream-set/darkice.pid"
 jack_source_1="system:capture_1"
 jack_source_2="system:capture_2"
 
+# playback
+#jack_out_1="system:playback_1"
+#jack_out_2="system:playback_2"
+
 # tools you will use (j/n)
-jamin="j"
+jamin="n"
 meterbridge="n"
-recorder="n"
+recorder="j"
 ebumeter="n"
+calffx="j"
 
 # settings for audiorecorder rotter (refer to the manpage of rotter)
 rotter_set="-a -f mp3 -b 192 -v -L flat -N SRB_Prot"

@@ -52,12 +52,22 @@ function f_check_rec_dir () {
 	fi
 }
 
+function f_check_fx () {
+	if [ "$jamin" != "n" ] && [ "$calffx" != "n" ]; 
+	then
+		message="# Pleas choose either Jamin OR Calf as FX-Module in teh conffigfile!\n Let's let down..."
+		echo $message
+		sleep 5
+		exit
+	fi
+}
+
 function f_check_package () {
         package_install=$1
         if dpkg-query -s $1 2>/dev/null|grep -q installed; then
                 echo "$package_install installiert"
         else
-                zenity --error --text="Package:\n$package_install\nnot installt, please install it first!"
+                zenity --error --text="Package:\n$package_install\nnot installed, please install it first!"
 		./stream-stop.sh &
                 exit
         fi
@@ -117,7 +127,30 @@ function f_start_jamin () {
 	echo $message
 	f_check_package "jamin"
 	sleep 1
-	jamin -f /home/$USER/stream-srb/stream-set/stream-srb.jam &
+	jamin -f ~/.jamin/srb-comp-lim.jam &
+}
+
+function f_start_calfjackhost () {
+	message="$message Starting Calf..\n"
+	echo $message
+	#f_check_package "calfjackhost"
+	# its not installed via deb
+	if [ -e /usr/bin/calfjackhost ]; then
+		sleep 1
+		calfjackhost ! multibandcompressor:Standard ! multibandlimiter:Standard ! &
+	else
+		zenity --error --text="Package:\nCalf\nnot installed, please install it first!"
+		exit
+	fi
+}
+
+function f_connect_calfjackhost () {
+	message="$message Connect Calf..\n"
+	echo $message
+	sleep 3
+	jack_disconnect multibandlimiterOut#1 $jack_out_1
+	jack_connect $jack_source_1 multibandlimiter:in_L &
+	jack_connect $jack_source_2 jamin:in_R &
 }
 
 function f_connect_jamin () {
@@ -163,6 +196,21 @@ function f_connect_darkice_jamin () {
 	jack_connect jamin:out_R $pdarkice:right &
 }
 
+function f_connect_darkice_calfjackhost () {
+	message="$message Connect Darkice..\n"
+	echo $message
+	sleep 1
+	# pid ermitteln
+	pid_darkice=$(cat $pidfile_int)
+	pdarkice="darkice-$pid_darkice"
+	message="$message $pdarkice\n"
+	echo $message
+	jack_disconnect $jack_source_1 $pdarkice:left &
+	jack_disconnect $jack_source_2 $pdarkice:right &
+	jack_connect "Calf Studio Gear:multibandlimiter Out #1" $pdarkice:left &
+	jack_connect "Calf Studio Gear:multibandlimiter Out #2" $pdarkice:right &
+}
+
 function f_connect_rotter_jamin () {
 	message="$message Connect Rotter..\n"
 	echo $message
@@ -173,6 +221,18 @@ function f_connect_rotter_jamin () {
 	jack_connect jamin:out_L rotter:left &
 	jack_connect jamin:out_R rotter:right &
 }
+
+function f_connect_rotter_calfjackhost () {
+	message="$message Connect Rotter..\n"
+	echo $message
+	sleep 1
+	echo $message
+	jack_disconnect $jack_source_1 rotter:left &
+	jack_disconnect $jack_source_2 rotter:right &
+	jack_connect "Calf Studio Gear:multibandlimiter Out #1" rotter:left &
+	jack_connect "Calf Studio Gear:multibandlimiter Out #2" rotter:right &
+}
+
 function f_connect_ebumeter_jamin () {
 	message="$message Connect EBU-Meter..\n"
 	echo $message
@@ -199,6 +259,8 @@ echo "Starting Stream and Jack-Apps..."
 	f_check_configfile
 	f_check_log_dir
 	f_check_jack
+	f_check_fx
+
 	if [ "$jamin" != "n" ]; then
 		f_check_jamin
 	fi
@@ -216,6 +278,11 @@ echo "Starting Stream and Jack-Apps..."
 		f_connect_jamin
 	fi
 
+	if [ "$calffx" != "n" ]; then
+		f_start_calfjackhost
+		#f_connect_jamin
+	fi
+
 	if [ "$recorder" != "n" ]; then
 		f_start_audiorecorder
 	fi	
@@ -228,12 +295,21 @@ echo "Starting Stream and Jack-Apps..."
 		fi
 	fi
 
+	if [ "$calffx" != "n" ]; then
+		f_connect_darkice_calfjackhost
+		if [ "$recorder" != "n" ]; then
+			f_connect_rotter_calfjackhost
+		fi
+	fi
+
 	if [ "$jamin" != "n" ]; then
 		if [ "$ebumeter" != "n" ]; then
 			f_connect_ebumeter_jamin
 		fi
 	fi
 
+
+	f_connect_darkice_calfjackhost
 	f_start_watchdog
 	sleep 5
 	echo "100"
